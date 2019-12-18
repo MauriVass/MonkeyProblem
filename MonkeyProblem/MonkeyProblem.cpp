@@ -1,6 +1,3 @@
-// MonkeyProblem.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include "pch.h"
 #include "Chromosome.h"
 #include "Population.h"
@@ -17,15 +14,20 @@ void Print(Population* p, int popSize) {
 
 int main()
 {
-	int popSize = 10;
+	//The population size should be large: the larger the faster the algorithm can find a good solution, but it would take a lot of power.
+	//A good number for the population size is >100
+	int popSize = 1000;
 	Population* p = new Population(popSize);
 
 	int generation = 0;
-	for (int i = 0; i < 5000; i++)
+	for (int i = 0; i < 50000; i++)
 	{
 		p->CreateNewPopulation();
+
+		//DEBUG (it shows all the chromosomes in the current population)
 		//cout << "i : " << i << "\n";
 		//Print(p, popSize);
+
 		generation++;
 		if (p->GetStop())
 			i = 9999999999;
@@ -33,5 +35,4 @@ int main()
 
 	cout << "Generations: " << generation << "\n";
 	p->PrintBest();
-
 }

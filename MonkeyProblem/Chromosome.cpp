@@ -5,6 +5,10 @@
 #include<ctime>
 using namespace std;
 
+//The Chromosome class is solution (good or bad). A chromosome has a set of genes of type char.
+//A chromosome can be mutated(one genes if changed) or inverted(the genes are divided in parts and these parts are reversed)
+//Two chromosomes can crossover to create two new children(offspring) with genes similar to their parents
+
 Chromosome::Chromosome(int nofGene, char* word, bool initialize)
 {
 	nofGenes = nofGene;
@@ -37,6 +41,7 @@ void Chromosome::Print() {
 	cout << "\n";
 }
 
+//Returns a copy of the current genes
 char * Chromosome::GetGenes()
 {
 	char* g = new char[nofGenes];
@@ -54,8 +59,10 @@ void Chromosome::SetGenes(char * genes)
 
 void Chromosome::Mutation()
 {
+	//Select one random gene
 	int index = rand() % nofGenes;
 
+	//Change it with a different one
 	char oldC = genes[index];
 	char newC = GenerateChar();
 	if(oldC==newC)
@@ -69,12 +76,20 @@ vector<Chromosome> Chromosome::CrossOver(Chromosome parent2)
 	Chromosome* c1 = new Chromosome(nofGenes,word, false);
 	Chromosome* c2 = new Chromosome(nofGenes,word, false);
 
+	//Decide how many cuts will be according with the sentence length
 	int nofCuts = 1;
 	if (nofGenes > 10)
 		nofCuts = 2;
 
-	int cutMin = nofCuts == 2 ? 1 + rand() % (nofGenes / 2 - 1) : 1 + rand() % (nofGenes - 1);
-	int cutMax = nofCuts == 2 ? cutMin + 1 + rand() % (nofGenes / 2 - 2) : 0;
+	int cutMin, cutMax = 0;
+	if (nofCuts == 2)
+	{
+		cutMin = 1 + rand() % (nofGenes / 2 - 1);
+		cutMax = cutMin + 1 + rand() % (nofGenes / 2 - 2);
+	}
+	else {
+		cutMin = 1 + rand() % (nofGenes - 1);
+	}
 
 	char* newGenes = new char[nofGenes];
 
@@ -105,29 +120,37 @@ void Chromosome::Inversion()
 	if (nofGenes > 10)
 		nofCuts = 2;
 
-	int cutMin = nofCuts == 2 ? 1 + rand() % (nofGenes / 2 - 1) : 1 + rand() % (nofGenes - 2);
-	int cutMax = nofCuts == 2 ? cutMin + 1 + rand() % (nofGenes / 2 - 2) : 0;
+	int cutMin, cutMax = 0;
+	if (nofCuts == 2)
+	{
+		cutMin = 1 + rand() % (nofGenes / 2 - 1);
+		cutMax = cutMin + 1 + rand() % (nofGenes / 2 - 2);
+	}
+	else {
+		cutMin = 1 + rand() % (nofGenes - 1);
+	}
 
+	//Copy old genes
 	char* chars = new char[nofGenes];
 	for (int i = 0; i < nofGenes; i++)
 		chars[i] = genes[i];
 
 
-	if (cutMax == 0)
+	if (nofCuts == 1)
 	{
 		for (int i = 0; i < nofGenes - (cutMin + cutMax); i++)
 			genes[i] = chars[i + cutMin + cutMax];
 		for (int i = nofGenes - (cutMin + cutMax); i < nofGenes; i++)
 			genes[i] = chars[i - (nofGenes - (cutMin + cutMax))];
 	}
-	else {
-		//Character after cutMax are placed at the beginning of genes
+	else if (nofCuts == 2) {
+		//Character after cutMax are placed at the beginning of new genes
 		for (int i = cutMax; i < nofGenes; i++)
 			genes[i - cutMax] = chars[i];
 		//Character between cutMin and cutMax are not moved
 		for (int i = cutMin; i < cutMax; i++)
 			genes[i + nofGenes - cutMax - 2] = chars[i];
-		//Character before cutMin are placed at the end of genes
+		//Character before cutMin are placed at the end of new genes
 		for (int i = 0; i < cutMin; i++)
 			genes[i + nofGenes - cutMin] = chars[i];
 	}
@@ -135,6 +158,7 @@ void Chromosome::Inversion()
 	delete[] chars;
 }
 
+//The fitness is calculated as an integer between 0 and nofGenes
 float Chromosome::CalculateFitness()
 {
 	fitness = 0;

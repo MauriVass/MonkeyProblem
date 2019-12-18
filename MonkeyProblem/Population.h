@@ -14,9 +14,12 @@ public:
 	~Population();
 
 private:
+	//MetaParameter
 	int populationSize;
 	int topChromosomes;
+	bool acceptWorseSolution;
 
+	//Best solution found so far and stopping condition
 	int bestFitness;
 	char* bestChromosome;
 	bool stop;
