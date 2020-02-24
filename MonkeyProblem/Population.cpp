@@ -5,7 +5,7 @@
 using namespace std;
 
 //This Population class contains all information about the chromosomes and the best solution found.
-//It also generates a new population from the current one.
+//It also contains methods to generate a new population from the current one.
 
 Population::Population(int popSize)
 {
@@ -46,9 +46,10 @@ vector<Chromosome> Population::GetChromosomes()
 void Population::SortPopulation()
 {
 	std::sort(chromosomes.begin(), chromosomes.end(), [](Chromosome & one, Chromosome & two) {return one.CalculateFitness() > two.CalculateFitness(); });
-	if (chromosomes[0].CalculateFitness()>bestFitness)
+	float fitness = chromosomes[0].CalculateFitness();
+	if (fitness > bestFitness)
 	{
-		bestFitness = chromosomes[0].CalculateFitness();
+		bestFitness = fitness;
 		bestChromosome = chromosomes[0].GetGenes();
 		cout << "Better found\t";
 		for (int i = 0; i < nCharacter; i++)
@@ -92,8 +93,14 @@ void Population::CreateNewPopulation()
 	- 1/5 are generated as new Chromosomes
 	*/	
 
+	/*Actually: (Better performance among the tried values)
+	-20% top Chromosomes are unchanged
+	-60%(topChromosomes / 2 * 3) are crossed over between top Chromosomes
+	-20% are crossed over between any Chromosomes
+	*/
+
 	//Crossover between top Chromosomes
-	for (int j = 0; j < topChromosomes / 2 * 4; j++)
+	for (int j = 0; j < topChromosomes / 2 * 3; j++)
 	{
 		//Choose two random numbers in range [0,topChromosomes)
 		n1 = rand() % (topChromosomes);
@@ -116,7 +123,7 @@ void Population::CreateNewPopulation()
 	}
 
 	//Crossover between any Chromosomes
-	/*for (int j = 0; j < topChromosomes/2; j++)
+	for (int j = 0; j < topChromosomes/2; j++)
 	{
 		n1 = rand() % (populationSize);
 		n2 = rand() % (populationSize);
@@ -132,8 +139,10 @@ void Population::CreateNewPopulation()
 		if (acceptWorseSolution || chromosomes.at(topChromosomes + counter).CalculateFitness() <= c2->CalculateFitness()){
 			chromosomes.at(topChromosomes + counter) = *c2;
 		}
-	}*/
+		counter++;
+	}
 
+	//Inversion on a random top Chromosome
 	/*for (int j = 0; j < topChromosomes / 2; j++)
 	{
 		n1 = rand() % (topChromosomes);
@@ -147,11 +156,14 @@ void Population::CreateNewPopulation()
 		counter++;
 	}*/
 
+	//Create new Chromosome and apply inversion
 	/*for (int j = 0; j < topChromosomes/2; j++)
 	{
 		Chromosome* c = new Chromosome(nCharacter,word);
 		c->Inversion();
-		chromosomes.at(topChromosomes + counter) = *c;
+		if (acceptWorseSolution || chromosomes.at(topChromosomes + counter).CalculateFitness() <= c1->CalculateFitness()) {
+			chromosomes.at(topChromosomes + counter) = *c;
+		}
 		counter++;
 	}*/
 }

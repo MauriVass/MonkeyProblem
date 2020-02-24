@@ -14,7 +14,7 @@ public:
 	~Population();
 
 private:
-	//MetaParameter
+	//Meta parameters
 	int populationSize;
 	int topChromosomes;
 	bool acceptWorseSolution;

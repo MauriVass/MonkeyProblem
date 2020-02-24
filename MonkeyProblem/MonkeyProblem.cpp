@@ -20,7 +20,8 @@ int main()
 	Population* p = new Population(popSize);
 
 	int generation = 0;
-	for (int i = 0; i < 50000; i++)
+	int maxNumGeneration = 50000;
+	for (int i = 0; i < maxNumGeneration; i++)
 	{
 		p->CreateNewPopulation();
 
@@ -30,7 +31,7 @@ int main()
 
 		generation++;
 		if (p->GetStop())
-			i = 9999999999;
+			i = maxNumGeneration;
 	}
 
 	cout << "Generations: " << generation << "\n";

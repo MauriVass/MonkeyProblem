@@ -1,0 +1,4 @@
+﻿  Population.cpp
+C:\Users\mauri\Desktop\New folder (2)\MonkeyProblem\Population.cpp(14,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\mauri\Desktop\New folder (2)\MonkeyProblem\Population.cpp(52,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  MonkeyProblem.vcxproj -> C:\Users\mauri\Desktop\New folder (2)\x64\Debug\MonkeyProblem.exe
