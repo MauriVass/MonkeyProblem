@@ -7,7 +7,7 @@ using namespace std;
 
 //The Chromosome class is a solution (good or bad). A chromosome has a set of genes of type char.
 //A chromosome can be mutated(one genes if changed) or inverted(the genes are divided in parts and these parts are reversed)
-//Two chromosomes can crossover to create two new children(offspring) with genes similar to their parents.
+//Two chromosomes can crossed over to create two new children(offspring) with genes similar to their parents.
 
 Chromosome::Chromosome(int nofGene, char* word, bool initialize)
 {

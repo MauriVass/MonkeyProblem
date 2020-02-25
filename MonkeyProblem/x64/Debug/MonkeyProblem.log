@@ -1,4 +1,9 @@
-﻿  Population.cpp
+﻿  pch.cpp
+  Chromosome.cpp
+C:\Users\mauri\Desktop\New folder (2)\MonkeyProblem\Chromosome.cpp(22,16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MonkeyProblem.cpp
+  Population.cpp
 C:\Users\mauri\Desktop\New folder (2)\MonkeyProblem\Population.cpp(14,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Users\mauri\Desktop\New folder (2)\MonkeyProblem\Population.cpp(52,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   MonkeyProblem.vcxproj -> C:\Users\mauri\Desktop\New folder (2)\x64\Debug\MonkeyProblem.exe
